@@ -1,0 +1,26 @@
+  <header class="header">
+        <div class="logo-section">
+            <div class="logo">N</div>
+            <div class="site-name">Служба Рассылки</div>
+        </div>
+
+        <div class="nav-buttons">
+            <a href="{% url 'mailing:client_list' %}" class="nav-btn{% if current_page == 'client_list' %}-active"{% endif %}">
+                <span>Получатели рассылок</span>
+            </a>
+            <a href="{% url 'mailing:message_list' %}" class="nav-btn{% if current_page == 'message_list' %}-active"{% endif %}">
+                <span>Сообщение</span>
+            </a>
+            <a href="{% url 'mailing:newsletter_list' %}" class="nav-btn{% if current_page == 'newsletter_list' %}-active"{% endif %}">
+                <span>Рассылки</span>
+            </a>
+            <a href="{% url 'mailing:attempt_list' %}" class="nav-btn{% if current_page == 'attempt_list' %}-active"{% endif %}">
+                <span>Попытки рассылок</span>
+            </a>
+        </div>
+
+        <div class="auth-buttons">
+            <button class="btn btn-login">Авторизация</button>
+            <button class="btn btn-register">Регистрация</button>
+        </div>
+    </header>

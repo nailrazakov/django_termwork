@@ -1,0 +1,35 @@
+{% extends 'mailing/base.html' %}
+{% block title %}Клиенты сервиса{% endblock %}
+{% block content %}
+
+ <!-- Основной контент -->
+
+    <main class="main-content">
+        <div class="content-header">
+            <p>Просмотр и управление рассылкой</p>
+        </div>
+
+        <hr>
+        <div class="container">
+            <form method="post" enctype="multipart/form-data" class="form-floating">
+                    <div class="card">
+                        <div class="card-body">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        {% if object %}
+                            <button type="submit" class="btn btn-primary">
+                                Сохранить
+                            </button>
+                        {% else %}
+                            <button type="submit" class="btn btn-danger">
+                                Создать
+                            </button>
+                        {% endif %}
+                        <a class="p-2 btn btn-outline-primary" href="{% url 'mailing:newsletter_list' %}">Отмена</a>
+                        </div>
+                    </div>
+            </form>
+        </div>
+    </main>
+
+{% endblock %}

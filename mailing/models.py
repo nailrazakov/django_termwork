@@ -4,14 +4,16 @@ from django.utils import timezone
 
 class Client(models.Model):
     """Клиент сервиса"""
-    email = models.EmailField(verbose_name='Почта')
+    email = models.EmailField(verbose_name='Почта', unique=True)
     fio = models.CharField(max_length=50, verbose_name='ФИО')
     comment = models.TextField(verbose_name='Комментарий')
     phone = models.CharField(max_length=25, verbose_name='Телефон', blank=True, null=True)
     tg_nik = models.CharField(max_length=50, verbose_name='Телеграмм ник', blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
-        return f"{self.email}"
+        return f"{self.email} - {self.fio}"
 
     class Meta:
         verbose_name = 'Клиент'

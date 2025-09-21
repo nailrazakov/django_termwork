@@ -1,10 +1,16 @@
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from mailing.models import Client, Message, Newsletter
+from mailing.models import Client, Message, Newsletter, Attempt
+from mailing.forms import MessageForm, ClientForm, NewsletterForm
 
 
 def home(requests):
-    return render(requests, 'mailing/home.html')
+    return render(requests, 'mailing/base.html')
+
+
+class AttemptListView(ListView):
+    model = Attempt
 
 
 # Clients
@@ -18,14 +24,19 @@ class ClientDetailView(DetailView):
 
 class ClientCreateView(CreateView):
     model = Client
+    form_class = ClientForm
+    success_url = reverse_lazy("mailing:client_list")
 
 
 class ClientUpdateView(UpdateView):
     model = Client
+    form_class = ClientForm
+    success_url = reverse_lazy("mailing:client_list")
 
 
 class ClientDeleteView(DeleteView):
     model = Client
+    success_url = reverse_lazy("mailing:client_list")
 
 
 # Message
@@ -39,14 +50,19 @@ class MessageDetailView(DetailView):
 
 class MessageCreateView(CreateView):
     model = Message
+    form_class = MessageForm
+    success_url = reverse_lazy("mailing:message_list")
 
 
 class MessageUpdateView(UpdateView):
     model = Message
+    form_class = MessageForm
+    success_url = reverse_lazy("mailing:message_list")
 
 
 class MessageDeleteView(DeleteView):
     model = Message
+    success_url = reverse_lazy("mailing:message_list")
 
 
 #  Newsletter
@@ -60,11 +76,16 @@ class NewsletterDetailView(DetailView):
 
 class NewsletterCreateView(CreateView):
     model = Newsletter
+    form_class = NewsletterForm
+    success_url = reverse_lazy("mailing:newsletter_list")
 
 
 class NewsletterUpdateView(UpdateView):
     model = Newsletter
+    form_class = NewsletterForm
+    success_url = reverse_lazy("mailing:newsletter_list")
 
 
 class NewsletterDeleteView(DeleteView):
     model = Newsletter
+    success_url = reverse_lazy("mailing:newsletter_list")

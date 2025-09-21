@@ -1,0 +1,39 @@
+{% extends 'mailing/base.html' %}
+{% block title %}Сообщения{% endblock %}
+{% block content %}
+
+ <!-- Основной контент -->
+<main class="main-content">
+    <div class="content-header">
+        <h1>Список сообщений</h1>
+        <p>Просмотр и управление письмами</p>
+    </div>
+    <div class="btn-group">
+        <a class="btn btn-outline-secondary" href="{% url 'mailing:message_create' %}">
+            <span>Создать новое сообщение</span>
+        </a>
+    </div>
+    <hr>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Тема письма</th>
+                    <th>Тело письма</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for message in object_list %}
+                <tr onclick="window.location.href='{% url 'mailing:message_detail' message.pk %}'">
+                    <td>{{message.id}}</td>
+                    <td>{{message.subject}}</td>
+                    <td>{{ message.body }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</main>
+
+{% endblock %}

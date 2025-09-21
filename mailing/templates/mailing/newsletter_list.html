@@ -1,0 +1,53 @@
+{% extends 'mailing/base.html' %}
+{% block title %}Клиенты сервиса{% endblock %}
+{% block content %}
+
+ <!-- Основной контент -->
+
+<main class="main-content">
+    <div class="content-header">
+        <h1>Список рассылок</h1>
+        <p>Просмотр и управление рассылками</p>
+    </div>
+    <div class="nav-buttons">
+        <a class="btn btn-outline-secondary" href="{% url 'mailing:newsletter_create' %}">
+            <span>Создать рассылку</span>
+        </a>
+    </div>
+    <hr>
+
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Тема сообщения рассылки</th>
+                    <th>Статус</th>
+                    <th>Первый запуск</th>
+                    <th>Следующая отправка</th>
+                    <th>Переодичность</th>
+                    <th>Получатели</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for newsletter in object_list %}
+                <tr onclick="window.location.href='{% url 'mailing:newsletter_detail' newsletter.pk %}'">
+                    <td>{{newsletter.id}}</td>
+                    <td>{{newsletter.message}}</td>
+                    <td><span class="status status{% if newsletter.status == 'launched' %}-active">Запущена
+                        {% elif newsletter.status == 'created' %}-pending">Создана
+                        {% else %}-inactive">Завершена{% endif %}</span></td>
+                    <td>{{ newsletter.first }}</td>
+                    <td>{{ newsletter.follow_up }}</td>
+                    <td>{{ newsletter.periodicity }}</td>
+                    <td>{% for client in newsletter.clients.all %}
+                            <p>{{ client.email }}</p>{% endfor %}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</main>
+
+{% endblock %}

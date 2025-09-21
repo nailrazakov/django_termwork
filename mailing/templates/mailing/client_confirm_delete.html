@@ -1,0 +1,36 @@
+{% extends 'mailing/base.html' %}
+{% block title %}Клиенты сервиса{% endblock %}
+{% block content %}
+
+    <main class="main-content">
+        <hr>
+    <div class="container">
+    <div class="row">
+        <div class="col-6">
+            <div class="card mb-4 box-shadow">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">{{ message }}</h4>
+                </div>
+                <form method="post" enctype="multipart/form-data" class="form-floating">
+                     <div class="card">
+                    <p class="card-text">
+                        Действительно ли вы хотите удалить {{ object.fio }}
+                    </p>
+                    <div class="card-body">
+                        {% csrf_token %}
+                    </div>
+                       <div class="mt-4">
+                    <button type="submit" class="btn btn-danger">
+                        Удалить
+                    </button>
+                    <a class="p-2 btn btn-outline-primary" href="{% url 'mailing:client_list' %}">Отмена</a>
+                </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+        </div>
+    </main>
+
+{% endblock %}

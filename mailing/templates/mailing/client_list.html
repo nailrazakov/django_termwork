@@ -1,0 +1,53 @@
+{% extends 'mailing/base.html' %}
+{% block title %}Клиенты сервиса{% endblock %}
+{% block content %}
+
+ <!-- Основной контент -->
+
+<main class="main-content">
+    <div class="content-header">
+        <h1>Список клиентов</h1>
+        <p>Просмотр и управление клиентами</p>
+    </div>
+    <div class="nav-buttons">
+        <a class="btn btn-outline-secondary" href="{% url 'mailing:client_create' %}">
+            <span>Новый клиент</span>
+        </a>
+    </div>
+    <hr>
+
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>ФИО</th>
+                    <th>Статус</th>
+                    <th>Адрес электронной почты</th>
+                    <th>Телефон</th>
+                    <th>Телеграмм ник</th>
+                    <th>Дата создания</th>
+                    <th>Комментарий</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for client in object_list %}
+                <tr onclick="window.location.href='{% url 'mailing:client_detail' client.pk %}'">
+                    <td>{{client.id}}</td>
+                    <td>{{client.fio}}</td>
+                    <td><span class="status status{% if client.is_active %}-active">Активный
+                        {% else %}-inactive">Не активный{% endif %}</span></td>
+                    <td>{{ client.email }}</td>
+                    <td>{{ client.phone }}</td>
+                    <td>{{ client.tg_nik }}</td>
+                    <td>{{ client.created_at|date:"d.m.Y" }}</td>
+                    <td>{{ client.comment }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</main>
+
+{% endblock %}

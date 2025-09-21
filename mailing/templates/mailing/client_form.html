@@ -1,0 +1,49 @@
+{% extends 'mailing/base.html' %}
+{% block title %}Клиенты сервиса{% endblock %}
+{% block content %}
+
+ <!-- Основной контент -->
+
+    <main class="main-content">
+        <div class="content-header">
+            <h1>Список клиентов</h1>
+            <p>Просмотр и управление клиентами</p>
+        </div>
+        <div class="nav-buttons">
+            <a class="nav-btn-active" href="{% url 'mailing:client_create' %}">
+                <span>Создать клиента</span>
+            </a>
+            <a href="{% url 'mailing:message_list' %}" class="nav-btn{% if current_page == 'message_list' %}-active"{% endif %}">
+                <span>Сообщение</span>
+            </a>
+            <a href="{% url 'mailing:newsletter_list' %}" class="nav-btn{% if current_page == 'newsletter_list' %}-active"{% endif %}">
+                <span>Рассылки</span>
+            </a>
+            <a href="{% url 'mailing:attempt_list' %}" class="nav-btn{% if current_page == 'attempt_list' %}-active"{% endif %}">
+                <span>Попытки рассылок</span>
+            </a>
+        </div>
+        <hr>
+        <div class="container">
+            <form method="post" enctype="multipart/form-data" class="form-floating">
+                    <div class="card">
+                        <div class="card-body">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        {% if object %}
+                            <button type="submit" class="btn btn-primary">
+                                Сохранить
+                            </button>
+                        {% else %}
+                            <button type="submit" class="btn btn-danger">
+                                Создать
+                            </button>
+                        {% endif %}
+                        <a class="p-2 btn btn-outline-primary" href="{% url 'mailing:client_list' %}">Отмена</a>
+                        </div>
+                    </div>
+            </form>
+        </div>
+    </main>
+
+{% endblock %}
