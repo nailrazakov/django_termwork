@@ -10,86 +10,44 @@
             <p>Просмотр рассылок</p>
         </div>
 
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Название рассылки</th>
-                        <th>Статус</th>
-                        <th>Получателей</th>
-                        <th>Дата создания</th>
-                        <th>Запущено</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr onclick="handleRowClick(1)">
-                        <td>1</td>
-                        <td>Приветственное письмо</td>
-                        <td><span class="status status-active">Активна</span></td>
-                        <td>1,234</td>
-                        <td>12.01.2024</td>
-                        <td>15.01.2024</td>
-                    </tr>
-                    <tr onclick="handleRowClick(2)">
-                        <td>2</td>
-                        <td>Новости компании (Январь)</td>
-                        <td><span class="status status-active">Активна</span></td>
-                        <td>3,456</td>
-                        <td>25.01.2024</td>
-                        <td>28.01.2024</td>
-                    </tr>
-                    <tr onclick="handleRowClick(3)">
-                        <td>3</td>
-                        <td>Спецпредложение февраля</td>
-                        <td><span class="status status-pending">Ожидание</span></td>
-                        <td>2,189</td>
-                        <td>05.02.2024</td>
-                        <td>-</td>
-                    </tr>
-                    <tr onclick="handleRowClick(4)">
-                        <td>4</td>
-                        <td>Напоминание о вебинаре</td>
-                        <td><span class="status status-inactive">Завершена</span></td>
-                        <td>987</td>
-                        <td>15.01.2024</td>
-                        <td>18.01.2024</td>
-                    </tr>
-                    <tr onclick="handleRowClick(5)">
-                        <td>5</td>
-                        <td>Опрос удовлетворенности</td>
-                        <td><span class="status status-active">Активна</span></td>
-                        <td>4,321</td>
-                        <td>10.02.2024</td>
-                        <td>12.02.2024</td>
-                    </tr>
-                    <tr onclick="handleRowClick(5)">
-                        <td>5</td>
-                        <td>Опрос удовлетворенности</td>
-                        <td><span class="status status-active">Активна</span></td>
-                        <td>4,321</td>
-                        <td>10.02.2024</td>
-                        <td>12.02.2024</td>
-                    </tr>
-                    <tr onclick="handleRowClick(5)">
-                        <td>5</td>
-                        <td>Опрос удовлетворенности</td>
-                        <td><span class="status status-active">Активна</span></td>
-                        <td>4,321</td>
-                        <td>10.02.2024</td>
-                        <td>12.02.2024</td>
-                    </tr>
-                    <tr onclick="handleRowClick(5)">
-                        <td>5</td>
-                        <td>Опрос удовлетворенности</td>
-                        <td><span class="status status-active">Активна</span></td>
-                        <td>4,321</td>
-                        <td>10.02.2024</td>
-                        <td>12.02.2024</td>
-                    </tr>
-                </tbody>
-            </table>
+      <section class="py-3 text-center container">
+        <div class="row py-lg-5">
+            <div class="col-lg-6 col-md-8 mx-auto">
+                <div class="card">
+                    <h3 class="fw-light">Количество успешных попыток рассылок:
+                        {{successfully_attempts | length}}</h3>
+                    <h3 class="fw-light">Количество неуспешных попыток рассылок:
+                        {{unsuccessfully_attempts | length}}</h3>
+                    <h3 class="fw-light">Количество отправленных сообщений:
+                        {{attempts_list | length}}</h3>
+                </div>
+            </div>
         </div>
+</section>
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            {% for attempt in attempts %}
+
+            <div class="col">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <p class="card-text">Дата и время создания попытки рассылки:</p>
+                        <p class="card-text">{{attempt.created_at|date:"H:i:s d M Y"}}</p>
+                        <p class="card-text">Статус попытки рассылки: {{attempt.get_status_display}}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                                <a class="btn btn-outline-primary btn-sm"
+                                   href="{% url 'sender:attempt_detail' attempt.pk %}"
+                                   role="button"> Подробнее </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% endfor %}
+        </div>
+    </div>
+</div>
     </main>
 
 {% endblock %}

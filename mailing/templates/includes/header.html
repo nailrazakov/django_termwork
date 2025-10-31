@@ -20,7 +20,18 @@
         </div>
 
         <div class="auth-buttons">
-            <button class="btn btn-login">Авторизация</button>
-            <button class="btn btn-register">Регистрация</button>
+        {% if user.is_authenticated %}
+            <form method="post" action="{% url 'users:logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="p-2 btn btn-outline-primary">{{ user.email }} Выйти</button>
+            </form>
+        {% else %}
+            <a href="{% url 'users:login' %}" class="nav-btn{% if current_page == 'login' %}-active"{% endif %}">
+                <span>Авторизация</span>
+            </a>
+            <a href="{% url 'users:register' %}" class="nav-btn{% if current_page == 'register' %}-active"{% endif %}">
+                <span>Регистрация</span>
+            </a>
+        {% endif %}
         </div>
     </header>

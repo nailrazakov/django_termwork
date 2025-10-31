@@ -1,35 +1,12 @@
 <!-- Сайдбар -->
 <aside class="sidebar">
-        <nav>
-            <ul class="menu">
-                <li class="menu-item active">
-                    <i class="fas fa-home"></i>
-                    <span>Главная</span>
-                </li>
-                <li class="menu-item">
-                    <i class="fas fa-users"></i>
-                    <span>Пользователи</span>
-                </li>
-                <li class="menu-item">
-                    <i class="fas fa-tachometer-alt"></i>
-                    <span>Статистика</span>
-                </li>
-                <li class="menu-item">
-                    <i class="fas fa-cog"></i>
-                    <span>Настройки</span>
-                </li>
-                <li class="menu-item">
-                    <i class="fas fa-chart-bar"></i>
-                    <span>Аналитика</span>
-                </li>
-                <li class="menu-item">
-                    <i class="fas fa-question-circle"></i>
-                    <span>Помощь</span>
-                </li>
-                <li class="menu-item">
-                    <i class="fas fa-phone"></i>
-                    <span>Поддержка</span>
-                </li>
-            </ul>
+        <nav class="menu">
+            <a href="{% url 'mailing:home' %}" class="menu-item{% if current_page == 'home' %} active"{% endif %}">
+                    <span class="nav-buttons"> Главная </span>
+            </a>
+            <a href="{% url 'users:user_list' %}" class="menu-item{% if current_page == 'user_list' %} active"{% endif %}">
+                    <span class="nav-buttons"> Пользователи </span>
+            </a>
+
         </nav>
     </aside>

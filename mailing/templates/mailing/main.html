@@ -1,0 +1,26 @@
+{% extends 'mailing/base.html' %}
+{% block title %}Клиенты сервиса{% endblock %}
+{% block content %}
+
+ <!-- Основной контент -->
+
+    <main class="main-content">
+
+      <section class="py-3 text-center container">
+        <div class="row py-lg-5">
+            <div class="col-lg-6 col-md-8 mx-auto">
+                <div class="card">
+                    <h3 class="fw-light">Количество успешных попыток рассылок:
+                        {{successfully_attempts | length}}</h3>
+                    <h3 class="fw-light">Количество неуспешных попыток рассылок:
+                        {{unsuccessfully_attempts | length}}</h3>
+                    <h3 class="fw-light">Количество отправленных сообщений:
+                        {{attempts_list | length}}</h3>
+                </div>
+            </div>
+        </div>
+</section>
+
+    </main>
+
+{% endblock %}

@@ -180,6 +180,11 @@ body {
     gap: 12px;
 }
 
+.sidebar .menu .menu-item a {
+    text-decoration: none;
+    color: none;
+}
+
 .menu-item:hover {
     background: #2c3e50;
     border-left-color: #3498db;
