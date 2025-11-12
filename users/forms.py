@@ -18,10 +18,11 @@ class UserRegisterForm(StyleFormMixin, UserCreationForm):
         model = User
         fields = ('email', 'password1', 'password2',)
 
+
 class UserForm(StyleFormMixin, UserCreationForm):
     class Meta:
         model = User
-        fields = ['email', 'password1', 'password2']
+        fields = ['email', 'phone_number', 'avatar', 'country', 'password1', 'password2']
 
 
 class UserSuperForm(StyleFormMixin, ModelForm):
@@ -34,5 +35,3 @@ class UserManagerForm(StyleFormMixin, ModelForm):
     class Meta:
         model = User
         fields = ('is_active',)
-
-

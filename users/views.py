@@ -6,14 +6,14 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 
 from config.settings import EMAIL_HOST_USER
-from users.forms import UserForm, UserManagerForm, UserSuperForm
+from users.forms import UserForm, UserManagerForm, UserSuperForm, UserRegisterForm
 from users.models import User
 import secrets
 
 
 class RegisterView(CreateView):
     template_name = 'users/register.html'
-    form_class = UserForm
+    form_class = UserRegisterForm
     success_url = reverse_lazy('users:login')
 
     def form_valid(self, form):
@@ -57,7 +57,7 @@ class UserDetailView(LoginRequiredMixin, DetailView):
 class UserUpdateView(LoginRequiredMixin, UpdateView):
     model = User
     fields = '__all__'
-    success_url = reverse_lazy('mailing:mailing_list')
+    success_url = reverse_lazy('users:user_list')
 
     def get_form_class(self):
         user = self.request.user

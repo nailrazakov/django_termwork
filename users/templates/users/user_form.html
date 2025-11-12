@@ -1,10 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'users/base.html' %}
+{% block title %}Пользователь сервиса{% endblock %}
+{% block content %}
 
-</body>
-</html>
+ <!-- Основной контент -->
+
+    <main class="main-content">
+
+        <hr>
+        <div class="container">
+            <form method="post" enctype="multipart/form-data" class="form-floating">
+                    <div class="card">
+                        <div class="card-body">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        {% if object %}
+                            <button type="submit" class="btn btn-primary">
+                                Сохранить
+                            </button>
+                        {% else %}
+                            <button type="submit" class="btn btn-danger">
+                                Создать
+                            </button>
+                        {% endif %}
+                        <a class="p-2 btn btn-outline-primary" href="{% url 'users:user_list' %}">Отмена</a>
+                        </div>
+                    </div>
+            </form>
+        </div>
+    </main>
+
+{% endblock %}
