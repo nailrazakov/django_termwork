@@ -64,6 +64,8 @@ class Newsletter(models.Model):
     #  Сообщение у рассылки может быть только одно, а вот клиентов может быть много.
     clients = models.ManyToManyField(Client, verbose_name='Клиенты')
     message = models.ForeignKey(Message, on_delete=models.CASCADE, verbose_name='Сообщение', related_name='newsletters')
+    owner = models.ForeignKey(User, verbose_name="Автор рассылки", help_text="Укажите автора рассылки", blank=True,
+                              null=True, on_delete=models.CASCADE,)
 
     def __str__(self):
         return f"{self.periodicity} - {self.status}"

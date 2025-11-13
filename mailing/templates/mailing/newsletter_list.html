@@ -28,6 +28,7 @@
                     <th>Следующая отправка</th>
                     <th>Переодичность</th>
                     <th>Получатели</th>
+                    <th>Владелец рассылки</th>
                 </tr>
             </thead>
             <tbody>
@@ -43,6 +44,7 @@
                     <td>{{ newsletter.periodicity }}</td>
                     <td>{% for client in newsletter.clients.all %}
                             <p>{{ client.email }}</p>{% endfor %}</td>
+                     <td>{{ newsletter.owner }}</td>
                 </tr>
             {% endfor %}
             </tbody>
