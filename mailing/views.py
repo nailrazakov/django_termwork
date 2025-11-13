@@ -150,11 +150,14 @@ class MailingSendAttemptView(LoginRequiredMixin, View):
                     send_mail(newsletter.message.subject, newsletter.message.body, EMAIL_HOST_USER, [client.email])
                     Attempt.objects.create(mailing=newsletter,
                                            status="successfully",
-                                           server_response="Сообщение отправлено успешно"
+                                           server_response="Сообщение отправлено успешно",
+                                           owner=request.user
                                            )
                 except SMTPException as e:
-                    Attempt.objects.create(mailing=newsletter, status="unsuccessfully",
-                                           server_response=str(e))
+                    Attempt.objects.create(mailing=newsletter,
+                                           status="unsuccessfully",
+                                           server_response=str(e),
+                                           owner=request.user)
         newsletter.status = "launched"
         newsletter.save()
         return redirect("mailing:attempt_list")

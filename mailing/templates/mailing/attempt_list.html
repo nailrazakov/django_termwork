@@ -27,8 +27,8 @@
                 <tr>
                     <td>{{client.id}}</td>
                     <td>{{attempt.created_at}}</td>
-                    <td><span class="status status{% if attempt.status == 'successfully' %}-active">Активный
-                        {% else %}-inactive">Не активный{% endif %}</span></td>
+                    <td><span class="status status{% if attempt.status == 'successfully' %}-active">Успешно
+                        {% else %}-inactive">Не Успешно{% endif %}</span></td>
                     <td>{{ attempt.server_response }}</td>
                     <td>{{ attempt.mailing }}</td>
                     <td>{{ attempt.owner }}</td>
