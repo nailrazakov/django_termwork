@@ -11,7 +11,7 @@ class ClientForm(forms.ModelForm):
 class NewsletterForm(forms.ModelForm):
     class Meta:
         model = Newsletter
-        fields = ['follow_up', 'periodicity', 'status', 'clients', 'message']
+        fields = ['follow_up', 'periodicity', 'status', 'clients', 'message', 'owner']
 
 
 class MessageForm(forms.ModelForm):

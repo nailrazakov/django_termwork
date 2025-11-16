@@ -1,0 +1,41 @@
+{% extends 'users/base.html' %}
+{% block title %}Пользователи{% endblock %}
+{% block content %}
+ <!-- Основной контент -->
+<main class="main-content">
+    <div class="content-header">
+        <h1>Список пользователей</h1>
+        <p>Просмотр и управление пользователями</p>
+    </div>
+
+    <hr>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Аватар</th>
+                    <th>Адрес электронной почты</th>
+                    <th>Телефон</th>
+                    <th>Страна</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for user in object_list %}
+                <tr onclick="window.location.href='{% url 'users:user_detail' user.pk %}'">
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.avatar }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.phone_number }}</td>
+                    <td>{{ user.country }}</td>
+                </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="text-center">Пользователи не найдены.</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</main>
+{% endblock %}

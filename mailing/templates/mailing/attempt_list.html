@@ -11,85 +11,33 @@
         </div>
 
         <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Название рассылки</th>
-                        <th>Статус</th>
-                        <th>Получателей</th>
-                        <th>Дата создания</th>
-                        <th>Запущено</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr onclick="handleRowClick(1)">
-                        <td>1</td>
-                        <td>Приветственное письмо</td>
-                        <td><span class="status status-active">Активна</span></td>
-                        <td>1,234</td>
-                        <td>12.01.2024</td>
-                        <td>15.01.2024</td>
-                    </tr>
-                    <tr onclick="handleRowClick(2)">
-                        <td>2</td>
-                        <td>Новости компании (Январь)</td>
-                        <td><span class="status status-active">Активна</span></td>
-                        <td>3,456</td>
-                        <td>25.01.2024</td>
-                        <td>28.01.2024</td>
-                    </tr>
-                    <tr onclick="handleRowClick(3)">
-                        <td>3</td>
-                        <td>Спецпредложение февраля</td>
-                        <td><span class="status status-pending">Ожидание</span></td>
-                        <td>2,189</td>
-                        <td>05.02.2024</td>
-                        <td>-</td>
-                    </tr>
-                    <tr onclick="handleRowClick(4)">
-                        <td>4</td>
-                        <td>Напоминание о вебинаре</td>
-                        <td><span class="status status-inactive">Завершена</span></td>
-                        <td>987</td>
-                        <td>15.01.2024</td>
-                        <td>18.01.2024</td>
-                    </tr>
-                    <tr onclick="handleRowClick(5)">
-                        <td>5</td>
-                        <td>Опрос удовлетворенности</td>
-                        <td><span class="status status-active">Активна</span></td>
-                        <td>4,321</td>
-                        <td>10.02.2024</td>
-                        <td>12.02.2024</td>
-                    </tr>
-                    <tr onclick="handleRowClick(5)">
-                        <td>5</td>
-                        <td>Опрос удовлетворенности</td>
-                        <td><span class="status status-active">Активна</span></td>
-                        <td>4,321</td>
-                        <td>10.02.2024</td>
-                        <td>12.02.2024</td>
-                    </tr>
-                    <tr onclick="handleRowClick(5)">
-                        <td>5</td>
-                        <td>Опрос удовлетворенности</td>
-                        <td><span class="status status-active">Активна</span></td>
-                        <td>4,321</td>
-                        <td>10.02.2024</td>
-                        <td>12.02.2024</td>
-                    </tr>
-                    <tr onclick="handleRowClick(5)">
-                        <td>5</td>
-                        <td>Опрос удовлетворенности</td>
-                        <td><span class="status status-active">Активна</span></td>
-                        <td>4,321</td>
-                        <td>10.02.2024</td>
-                        <td>12.02.2024</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Создана</th>
+                    <th>Статус</th>
+                    <th>server_response</th>
+                    <th>Рассылка</th>
+                    <th>Owner</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for attempt in object_list %}
+                <tr>
+                    <td>{{client.id}}</td>
+                    <td>{{attempt.created_at}}</td>
+                    <td><span class="status status{% if attempt.status == 'successfully' %}-active">Успешно
+                        {% else %}-inactive">Не Успешно{% endif %}</span></td>
+                    <td>{{ attempt.server_response }}</td>
+                    <td>{{ attempt.mailing }}</td>
+                    <td>{{ attempt.owner }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
     </main>
 
 {% endblock %}

@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from users.models import User
 
 
 class Client(models.Model):
@@ -37,13 +38,11 @@ class Message(models.Model):
 
 class Newsletter(models.Model):
     """Рассылка (настройки)"""
-    CREATED = 'created'
-    LAUNCHED = 'launched'
-    COMPLETED = 'completed'
+
     STATUS = (
-        (CREATED, 'создана'),
-        (LAUNCHED, 'запущена'),
-        (COMPLETED, 'завершена'),
+        ('created', 'создана'),
+        ('launched', 'запущена'),
+        ('completed', 'завершена'),
     )
     DAILY = 'daily'
     WEEKLY = 'weekly'
@@ -60,11 +59,13 @@ class Newsletter(models.Model):
     #  Периодичность рассылки: раз в день, раз в неделю, раз в месяц;
     periodicity = models.CharField(max_length=15, choices=PERIOD, verbose_name='Периодичность рассылки')
     #  Статус рассылки (например, завершена, создана, запущена).
-    status = models.CharField(max_length=15, choices=STATUS, default=CREATED, verbose_name='Статус рассылки')
+    status = models.CharField(max_length=15, choices=STATUS, default=STATUS[0][0], verbose_name='Статус рассылки')
     #  Рассылка внутри себя должна содержать ссылки на модели «Сообщения и «Клиенты сервиса».
     #  Сообщение у рассылки может быть только одно, а вот клиентов может быть много.
     clients = models.ManyToManyField(Client, verbose_name='Клиенты')
     message = models.ForeignKey(Message, on_delete=models.CASCADE, verbose_name='Сообщение', related_name='newsletters')
+    owner = models.ForeignKey(User, verbose_name="Автор рассылки", help_text="Укажите автора рассылки", blank=True,
+                              null=True, on_delete=models.CASCADE,)
 
     def __str__(self):
         return f"{self.periodicity} - {self.status}"
@@ -75,24 +76,48 @@ class Newsletter(models.Model):
 
 
 class Attempt(models.Model):
-    """Попытка рассылки:"""
-    SUCCESSFULLY = 'success'
-    FAILED = 'failed'
-    STATUS = (
-        (SUCCESSFULLY, 'успешно'),
-        (FAILED, 'не успешно'),
-    )
-    #  дата и время последней попытки;
-    last = models.DateTimeField(default=timezone.now, verbose_name="Последняя попытка")
-    #  статус попытки (успешно / не успешно);
-    status = models.CharField(choices=STATUS, default=FAILED, verbose_name='Статус попытки')
-    #  ответ почтового сервера, если он был.
-    answer = models.TextField(blank=True, null=True, verbose_name='Ответ почтового сервиса')
-    newsletter = models.ForeignKey(Newsletter, on_delete=models.CASCADE, verbose_name='Рассылка')
+    """Модель 'Попытка рассылки'"""
 
-    def __str__(self):
-        return f"{self.last} - {self.status}"
+    STATUS_OPTIONS = (
+        ("successfully", "Успешно"),
+        ("unsuccessfully", "Не успешно"),
+    )
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name="Дата и время попытки рассылки",
+    )
+    status = models.CharField(
+        max_length=15, choices=STATUS_OPTIONS, default="successfully"
+    )
+    server_response = models.TextField(
+        verbose_name="Ответ почтового сервера",
+        blank=True,
+        null=True,
+    )
+    mailing = models.ForeignKey(
+        Newsletter,
+        verbose_name="Рассылка",
+        help_text="Укажите рассылку",
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+    )
+    owner = models.ForeignKey(
+        User,
+        verbose_name="Автор рассылки",
+        help_text="Укажите автора рассылки",
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE,
+    )
 
     class Meta:
-        verbose_name = 'Попытка'
-        verbose_name_plural = 'Попытки'
+        verbose_name = "попытка рассылки"
+        verbose_name_plural = "попытки рассылки"
+        ordering = ["created_at", "mailing", "status", "server_response"]
+        permissions = [
+            ("can_view_attempt_mailing", "Can view attempt mailing"),
+        ]
+
+    def __str__(self):
+        return f"Рассылка запущена {self.created_at} автором - {self.owner}. Статус -  {self.status}."

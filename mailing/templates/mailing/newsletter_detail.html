@@ -71,6 +71,11 @@
            <a href="{% url 'mailing:newsletter_update' object.pk %}" class="btn btn-outline-primary">Редактировать</a>
            <a href="{% url 'mailing:newsletter_delete' object.pk %}" class="btn btn-outline-danger">Удалить</a>
            <a href="{% url 'mailing:newsletter_list' %}" class="btn btn-outline-secondary">Назад</a>
+
+        <form method="post" action="{% url 'mailing:attempt' object.pk %}">
+            {% csrf_token %}
+            <button class="btn btn-primary" style="margin-left: 100px;" type="submit">Отправить рассылку</button>
+        </form>
        </div>
     </div>
 </div>
